@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a101e">
+  <meta name="description" content="Explore NextGen VoiceDesk, an AI-ready receptionist demo with conversations, appointment requests, and lead workflows.">
+  <title>NextGen VoiceDesk — Receptionist & CRM Demo</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a href="#overview" class="brand" data-view-target="overview" aria-label="NextGen VoiceDesk home">
+        <span class="brand-mark"><span class="brand-mark-inner">N</span></span>
+        <span class="brand-copy"><strong>nextgen<span class="brand-dot">.</span></strong><small>VOICEDESK</small></span>
+      </a>
+      <div class="workspace-card">
+        <span class="workspace-avatar">AD</span>
+        <span class="workspace-info"><strong>Aster Dental</strong><small>Fictional demo business</small></span>
+        <span class="workspace-chevron">⌄</span>
+      </div>
+      <div class="nav-heading">WORKSPACE</div>
+      <nav class="nav-links" aria-label="Workspace">
+        <a href="#overview" data-view-target="overview" class="nav-link active"><span class="nav-icon">◫</span> Overview</a>
+        <a href="#calls" data-view-target="calls" class="nav-link"><span class="nav-icon">◉</span> Live receptionist <span class="nav-tag">DEMO</span></a>
+        <a href="#appointments" data-view-target="appointments" class="nav-link"><span class="nav-icon">▦</span> Appointments</a>
+        <a href="#leads" data-view-target="leads" class="nav-link"><span class="nav-icon">☷</span> Lead inbox <span id="nav-lead-count" class="nav-count">4</span></a>
+      </nav>
+      <div class="nav-heading second-heading">PREFERENCES</div>
+      <nav class="nav-links"><a href="#settings" data-view-target="settings" class="nav-link"><span class="nav-icon">⚙</span> Settings</a></nav>
+      <div class="sidebar-bottom">
+        <div class="plan-card">
+          <div class="plan-symbol">✦</div>
+          <strong>Build your own 24/7 front desk.</strong>
+          <p>Voice, bookings and CRM workflows. Designed for real business needs.</p>
+          <a href="https://www.nextgentechdev.com" target="_blank" rel="noopener noreferrer">Explore NextGen <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="signed-in"><span class="profile-icon">NG</span><span><strong>NextGen Tech Solutions</strong><small>Portfolio demonstration</small></span><span class="more">···</span></div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="slash">/</span><strong id="breadcrumb">Overview</strong></div>
+        <div class="top-actions"><span class="demo-indicator"><span></span> SANDBOX DEMO</span><button type="button" id="header-try" class="btn btn-primary btn-small">✦ Try the receptionist</button></div>
+      </header>
+      <main id="main-content">
+        <section id="view-overview" class="view active" aria-label="Overview">
+          <div class="page-header"><div><div class="eyebrow"><span class="sparkle">✧</span> YOUR FRONT DESK, REIMAGINED</div><h1>Good things happen<br><em>when every call counts.</em></h1><p class="lead">One beautifully connected workspace for every conversation, appointment request and new opportunity.</p></div><div class="header-micro"><span class="pulse-dot"></span><span>Receptionist simulator<br><strong>Ready for a demo</strong></span></div></div>
+          <div class="notice"><span class="notice-icon">ⓘ</span><span><strong>Interactive demonstration.</strong> All starting metrics and contact records are fictional examples. This browser demo runs locally; no real phone lines, calendar or CRM accounts are connected.</span></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-meta"><span>Demo conversations</span><span class="stat-symbol violet">☎</span></div><div class="stat-value" id="stat-calls">24</div><div class="stat-foot"><span class="metric-note">Sample data + your demo sessions</span></div></article>
+            <article class="stat-card"><div class="stat-meta"><span>Appointment requests</span><span class="stat-symbol cyan">▦</span></div><div class="stat-value" id="stat-appointments">6</div><div class="stat-foot"><span class="metric-note">Unconfirmed requests</span></div></article>
+            <article class="stat-card"><div class="stat-meta"><span>Leads captured</span><span class="stat-symbol lime">↗</span></div><div class="stat-value" id="stat-leads">4</div><div class="stat-foot"><span class="metric-note">Fictional contacts, stored in browser</span></div></article>
+            <article class="stat-card"><div class="stat-meta"><span>Phone lines connected</span><span class="stat-symbol amber">◇</span></div><div class="stat-value">0<span class="stat-small"> / 1</span></div><div class="stat-foot"><span class="offline-dot"></span><span class="metric-note">Twilio not configured</span></div></article>
+          </div>
+          <div class="overview-grid">
+            <section class="panel volume-panel">
+              <div class="panel-header"><div><h2>Conversation activity</h2><p>Illustrative activity over the last 7 days</p></div><span class="sample-pill">SAMPLE</span></div>
+              <div class="chart"><div class="chart-grid"><span>6</span><span>4</span><span>2</span><span>0</span></div><div class="bars" aria-label="Sample conversations by day"><div class="bar-col"><div class="bar"></div><span>Mon</span></div><div class="bar-col"><div class="bar"></div><span>Tue</span></div><div class="bar-col"><div class="bar"></div><span>Wed</span></div><div class="bar-col"><div class="bar"></div><span>Thu</span></div><div class="bar-col"><div class="bar"></div><span>Fri</span></div><div class="bar-col"><div class="bar"></div><span>Sat</span></div><div class="bar-col"><div class="bar"></div><span>Sun</span></div></div></div>
+              <div class="chart-bottom"><span><i class="legend-dot"></i> Sample calls</span><span>Not business performance data</span></div>
+            </section>
+            <section class="panel assistant-panel"><div class="panel-header"><div><h2>Meet your receptionist</h2><p>An interactive preview, right here</p></div><span class="status-tag"><span></span> READY</span></div><div class="assistant-preview"><div class="voice-halo"><div class="voice-center"><span class="voice-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div><span class="preview-title">A voice that never misses the moment.</span><p>Try a realistic scripted call flow with voice playback and lead capture.</p><button type="button" id="overview-try" class="btn btn-white">Start a demo call <span>↗</span></button></div></section>
+          </div>
+          <section class="panel recent-panel"><div class="panel-header"><div><h2>Recent leads</h2><p>A peek into your demo inbox</p></div><button type="button" class="subtle-button" data-view-target="leads">View lead inbox →</button></div><div id="overview-leads" class="recent-list"></div></section>
+          <footer class="page-footer">Built with intention by <strong>NextGen Tech Solutions</strong> <span>·</span> VoiceDesk v1.0 demo</footer>
+        </section>
+
+        <section id="view-calls" class="view" aria-label="Live receptionist">
+          <div class="section-heading"><div><div class="eyebrow">RECEPTIONIST PLAYGROUND</div><h1>Experience the conversation.</h1><p>Simulate a customer call with a scripted intent engine. Speak responses aloud when supported by your browser.</p></div><span class="sample-pill">BROWSER DEMO</span></div>
+          <div class="call-layout">
+            <div class="panel call-stage"><div class="call-stage-top"><span class="call-icon">☎</span><span id="call-status" class="call-status">READY TO CONNECT</span></div><div class="call-orbit" id="call-orbit"><div class="orbit-outer"><div class="orbit-mid"><div class="orbit-inner"><span class="wave-sign">≋</span></div></div></div></div><h2 id="call-title">Your virtual front desk</h2><p id="call-subtitle">Start a simulated call to meet the receptionist.</p><button type="button" class="btn btn-primary call-main-btn" id="call-toggle">☎ Start demo call</button><label class="voice-switch"><input id="voice-enabled" type="checkbox" checked><span>Read replies aloud when supported</span></label><p class="call-disclaimer">Browser speech is optional; this is not a real telephone call.</p></div>
+            <div class="panel transcript-panel"><div class="panel-header"><div><h2>Live transcript</h2><p>Guided conversation and example customer questions</p></div><span class="sample-pill">DEMO</span></div><div id="transcript" class="transcript" aria-live="polite"><div class="empty-transcript"><span>✦</span><strong>A conversation starts here.</strong><p>Press Start demo call to begin.</p></div></div><div id="quick-questions" class="quick-questions" hidden><button type="button" data-question="I'd like to book an appointment">Book an appointment</button><button type="button" data-question="How much does a consultation cost?">Ask about pricing</button><button type="button" data-question="What are your opening hours?">Business hours</button><button type="button" data-question="Can I talk to a person?">Request callback</button></div><form id="message-form" class="message-form"><input type="text" id="message-input" maxlength="500" aria-label="Type customer question" placeholder="Start a call to type a customer question…" disabled required><button type="button" id="mic-btn" title="Use browser microphone" aria-label="Use microphone" disabled>♩</button><button type="submit" id="send-btn" class="btn btn-primary" disabled>Send ↗</button></form><p class="transcript-foot">No external AI model is connected. Intent replies are rule-based and may not answer every question.</p></div>
+          </div>
+        </section>
+
+        <section id="view-appointments" class="view" aria-label="Appointments">
+          <div class="section-heading"><div><div class="eyebrow">BOOKING WORKFLOW</div><h1>Appointments, without the chaos.</h1><p>Request a time slot and track it in your demo calendar. All bookings remain <strong>unconfirmed</strong>.</p></div><span class="sample-pill">DEMO CALENDAR</span></div>
+          <div class="booking-layout"><section class="panel booking-form-panel"><div class="panel-header"><div><h2>Request an appointment</h2><p>Monday–Friday, 09:00–16:30 · half-hour slots</p></div></div><form id="booking-form" class="data-form"><label>Full name<input id="booking-name" type="text" maxlength="100" placeholder="e.g. Jordan Lee" autocomplete="name" required></label><label>Contact email or number<input id="booking-contact" type="text" maxlength="150" placeholder="name@example.com" required></label><label>Service<select id="booking-service"><option>Consultation</option><option>New patient visit</option><option>Follow-up</option><option>General inquiry</option></select></label><div class="form-row"><label>Preferred date<input id="booking-date" type="date" required></label><label>Time<select id="booking-time" required></select></label></div><button class="btn btn-primary full-button" type="submit">Request this slot ↗</button><p class="form-hint">An appointment request is not an actual booking. No email, SMS or calendar invitation is sent.</p><div id="booking-feedback" class="form-feedback" role="status"></div></form></section><section class="panel bookings-panel"><div class="panel-header"><div><h2>Upcoming requests</h2><p>Fictional examples plus requests you add</p></div><span id="booking-count" class="count-badge">0</span></div><div class="table-wrap"><table><thead><tr><th>Customer</th><th>Requested slot</th><th>Status</th></tr></thead><tbody id="appointment-rows"></tbody></table></div></section></div>
+        </section>
+
+        <section id="view-leads" class="view" aria-label="Lead inbox">
+          <div class="section-heading"><div><div class="eyebrow">LEAD INTELLIGENCE</div><h1>Every opportunity, organized.</h1><p>Manage requests from conversations and export your sandbox records for a sample CRM workflow.</p></div><button id="export-leads" type="button" class="btn btn-outline">↓ Export demo leads</button></div>
+          <div class="panel leads-panel"><div class="panel-header lead-panel-header"><div><h2>Lead inbox <span id="lead-list-count" class="count-badge">0</span></h2><p>Fictional records are clearly marked as samples</p></div><label class="search-box"><span>⌕</span><input id="lead-search" type="search" placeholder="Search leads…" aria-label="Search leads"></label></div><div class="table-wrap"><table><thead><tr><th>Contact</th><th>Interest</th><th>Source</th><th>Status</th></tr></thead><tbody id="lead-rows"></tbody></table></div></div>
+          <section class="panel manual-lead-panel"><div class="panel-header"><div><h2>Add a lead</h2><p>Try the capture workflow with fictional contact details</p></div></div><form id="lead-form" class="lead-inline-form"><label>Name<input id="lead-name" maxlength="100" placeholder="Customer name" required></label><label>Contact<input id="lead-contact" maxlength="150" placeholder="Email or phone" required></label><label>Interested in<input id="lead-interest" maxlength="120" placeholder="e.g. Teeth whitening" required></label><button type="submit" class="btn btn-primary">+ Save demo lead</button></form><div id="lead-feedback" class="form-feedback" role="status"></div></section>
+        </section>
+
+        <section id="view-settings" class="view" aria-label="Settings">
+          <div class="section-heading"><div><div class="eyebrow">DEMO CONFIGURATION</div><h1>Make it your own.</h1><p>Understand what's functional today and what needs a production integration.</p></div></div>
+          <div class="settings-grid"><section class="panel setting-card"><div class="setting-symbol purple-bg">◉</div><h2>Conversation engine</h2><p>Guided, deterministic responses for booking, hours, pricing, location and callback intents. No external LLM is used.</p><span class="settings-state configured">✓ Working in demo</span></section><section class="panel setting-card"><div class="setting-symbol green-bg">▦</div><h2>Appointments & leads</h2><p>Try the sandbox flow in your browser. A separate Python API includes SQLite persistence and protected admin endpoints.</p><span class="settings-state configured">✓ Working in demo & backend</span></section><section class="panel setting-card"><div class="setting-symbol orange-bg">☎</div><h2>Real phone calling</h2><p>Needs an active Twilio number, signed webhook configuration and a live HTTPS deployment.</p><span class="settings-state pending">○ Setup required</span></section><section class="panel setting-card"><div class="setting-symbol blue-bg">↗</div><h2>Calendar / CRM sync</h2><p>Live Google Calendar, HubSpot, GoHighLevel and email integrations are not connected in the demo.</p><span class="settings-state pending">○ Setup required</span></section></div>
+          <div class="panel reset-panel"><div><h2>Reset demo workspace</h2><p>Erase your locally added demo conversations, leads and appointment requests. Original sample records will be restored.</p></div><button type="button" id="reset-demo" class="btn btn-outline danger-button">Reset demo data</button></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
