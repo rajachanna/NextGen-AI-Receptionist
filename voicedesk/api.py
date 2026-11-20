@@ -17,6 +17,7 @@ from urllib.parse import parse_qs, urlsplit
 from xml.etree.ElementTree import Element, SubElement, tostring
 
 from .logic import classify
+from .ai import answer as ai_answer, configured as ai_configured
 from .store import Store, ValidationError, ConflictError
 
 WEB_ROOT = Path(__file__).resolve().parents[1] / "web"
@@ -101,7 +102,7 @@ def make_handler(store, admin_key="", twilio_token="", public_base_url=""):
             path = urlsplit(self.path).path
             if path == "/api/health":
                 self.respond(200, {"status":"ok", "product":"NextGen VoiceDesk",
-                                  "assistant_mode":"rules", "telephony_enabled":bool(twilio_token and public_base_url)})
+                                  "assistant_mode":("llm" if ai_configured() else "rules"), "telephony_enabled":bool(twilio_token and public_base_url)})
                 return
             if path in ("/api/leads", "/api/appointments", "/api/summary"):
                 if not self.admin_authorized():
@@ -145,9 +146,10 @@ def make_handler(store, admin_key="", twilio_token="", public_base_url=""):
                     message = data.get("message", "")
                     if not isinstance(message, str) or len(message) > 1000:
                         raise ValidationError("message must be text (max 1000 chars)")
-                    intent, answer = classify(message)
+                    intent, baseline = classify(message)
+                    answer, mode = (baseline, "rules") if intent in ("booking", "human") else ai_answer(message,baseline)
                     self.respond(200, {"intent":intent,"answer":answer,
-                                       "mode":"rules","booking_confirmed":False})
+                                       "mode":mode,"booking_confirmed":False})
             except ConflictError as exc:
                 self.fail(409, str(exc))
             except (ValidationError, json.JSONDecodeError) as exc:
@@ -182,7 +184,8 @@ def make_handler(store, admin_key="", twilio_token="", public_base_url=""):
                     answer = "Sorry, I did not catch that. Please call again or contact the team directly."
                     self.send(200, twiml_reply("clarify", answer), "application/xml; charset=utf-8")
                     return
-                intent, answer = classify(speech)
+                intent, baseline = classify(speech)
+                answer, _mode = (baseline, "rules") if intent in ("booking", "human") else ai_answer(speech,baseline)
                 # Do not record caller ID-less requests as actionable leads.
                 if caller and sid:
                     store.create_lead({"name":"Caller follow-up","contact":caller,

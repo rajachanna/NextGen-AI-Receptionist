@@ -7,6 +7,9 @@ import json
 import tempfile
 import threading
 import unittest
+import io
+import os
+from unittest.mock import patch
 from pathlib import Path
 from http.server import ThreadingHTTPServer
 from zoneinfo import ZoneInfo
@@ -15,6 +18,7 @@ from urllib.parse import urlencode
 from voicedesk.logic import classify
 from voicedesk.store import Store, ValidationError, ConflictError
 from voicedesk.api import make_handler, twilio_valid
+from voicedesk.ai import extract_text, answer as ai_answer
 
 KEY = "this-is-only-a-local-unit-test-secret"
 
@@ -52,6 +56,29 @@ class IntentTests(unittest.TestCase):
     def test_intents(self):
         for phrase,intent in [("book an appointment","booking"),("how much does it cost","pricing"),("opening hours","hours"),("speak to a human","human"),("directions and parking","location"),("hello","general"),("","clarify")]:
             with self.subTest(phrase=phrase): self.assertEqual(classify(phrase)[0],intent)
+
+
+class AiTests(unittest.TestCase):
+    def test_extracts_responses_output(self):
+        data={"output":[{"type":"message","content":[{"type":"output_text","text":"I can help you with that."}]}]}
+        self.assertEqual(extract_text(data),"I can help you with that.")
+    def test_unconfigured_fallback(self):
+        with patch.dict(os.environ,{"OPENAI_API_KEY":"","OPENAI_MODEL":""}):
+            self.assertEqual(ai_answer("hello","scripted"),("scripted","rules"))
+    def test_mocked_responses_api(self):
+        mock_result={"output":[{"type":"message","content":[{"type":"output_text","text":"I can take a message for your team."}]}]}
+        with patch.dict(os.environ,{"OPENAI_API_KEY":"not-a-real-secret","OPENAI_MODEL":"mock-model"}):
+            with patch("voicedesk.ai.urlopen",return_value=io.BytesIO(json.dumps(mock_result).encode())) as call:
+                reply,mode=ai_answer("Can I get information?","fallback")
+                self.assertEqual(mode,"llm")
+                self.assertIn("take a message",reply)
+                sent=json.loads(call.call_args[0][0].data)
+                self.assertIs(sent["store"],False)
+                self.assertEqual(sent["model"],"mock-model")
+    def test_provider_failure_is_safe(self):
+        with patch.dict(os.environ,{"OPENAI_API_KEY":"not-a-real-secret","OPENAI_MODEL":"mock-model"}):
+            with patch("voicedesk.ai.urlopen",side_effect=TimeoutError):
+                self.assertEqual(ai_answer("Hello","fallback"),("fallback","rules_fallback"))
 
 class HttpTests(unittest.TestCase):
     @classmethod

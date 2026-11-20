@@ -22,9 +22,13 @@ The voice webhook asks for a caller's reason (via Twilio Gather input=speech), c
 
 Add business-specific consent and privacy notices before collecting call speech and personal data. Implement CallSid idempotency to avoid repeated leads on Twilio retries; implement actual human escalation, language handling, diagnostics, non-business-hours paths and phone-number provisioning.
 
-## Real AI model addition
+## Optional real AI replies (not enabled in the public demo)
 
-The code deliberately defaults to a deterministic safety fallback. For an LLM assistant, add provider configuration, business source-of-truth knowledge base, constrained tools for appointments, appropriate system prompts, redaction/PII handling, explicit human escalation, hallucination/failure controls, evaluation scripts, token spending limits and timeouts. Test with the target business before enabling live customer conversations.
+The server offers an optional OpenAI Responses API integration in voicedesk/ai.py. To enable it, set OPENAI_API_KEY and OPENAI_MODEL as server-side environment variables. Also set BUSINESS_NAME and BUSINESS_CONTEXT to verified business facts, such as operating hours and service descriptions. If missing, calls remain rule-based; if the provider errors or times out, the code falls back to deterministic answers. Appointment and human-handoff intents remain deliberately rule-based; no LLM can execute booking actions.
+
+The integration requests store=false and caps generation tokens, but enabling it transmits caller text to the provider and may incur usage charges. Check consent, regulatory obligations, provider data practices, cost ceilings and target-model eligibility. The static public demo never sends content to this API or provider.
+
+This is not a turnkey real-time voice agent: for production, add a business source-of-truth knowledge base, appropriate tools for appointments, evaluation scripts, redaction/PII handling, staff escalation, hallucination controls, spending limits, per-customer isolation, and timeout/failure testing before enabling live customer calls.
 
 ## CI and delivery
 

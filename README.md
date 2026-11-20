@@ -4,7 +4,7 @@
 
 [Open the interactive demo](https://rajachanna.github.io/NextGen-AI-Receptionist/) | [NextGen Tech Solutions](https://www.nextgentechdev.com)
 
-> TRANSPARENT DEMO: The online dashboard uses fictional sample contacts and your own browser storage. No real phone line, LLM/AI provider, CRM, calendar, SMS, email or payment provider is connected. The default conversation engine is explicitly RULE-BASED. Appointments are REQUESTS only; they are NOT confirmed.
+> TRANSPARENT DEMO: The online dashboard uses fictional sample contacts and your own browser storage. No real phone line, LLM/AI provider, CRM, calendar, SMS, email or payment provider is connected. The hosted browser demo is RULE-BASED. The separate backend supports optional OpenAI Responses API replies when valid server-side credentials are configured. Appointments are REQUESTS only; they are NOT confirmed.
 
 ![VoiceDesk desktop dashboard](docs/dashboard.png)
 
@@ -17,9 +17,10 @@
 - Appointment-request form: weekday, 30-minute slots, past-date and duplicate-slot prevention.
 - Lead inbox, search, manual entries, JSON export and demo reset.
 - Separate Python standard-library backend with real SQLite persistence, admin-key-gated lead, appointment and summary APIs, and optional signed Twilio voice webhooks.
+- Optional real model answers using the OpenAI Responses API: configurable model, short constrained responses, privacy-oriented store=false, and rule-based fallback on errors. Not activated on the public demo.
 - Reproducible integration tests; GitHub Actions CI.
 
-**What is NOT built:** Real generative AI conversations, phone-call production service, live calendar booking, CRM sync, outbound calls, reminders, staff transfers, payment collection, automated performance analytics or deployed customer production backend. These are paid business-specific integrations to build and verify separately.
+**What is NOT built or connected:** Live generative AI on the public demo, production phone service, live calendar booking, CRM sync, outbound calls, reminders, staff transfers, payment collection, automated performance analytics or a deployed customer production backend. The source contains an optional server-side model integration that needs credentials and a paid provider account. These are paid business-specific integrations to build and verify separately.
 
 ## Run locally
 
@@ -45,7 +46,9 @@ Example protected admin API call:
     curl http://127.0.0.1:8974/api/summary \
       -H "Authorization: Bearer $VOICEDESK_ADMIN_KEY"
 
-Do NOT put the admin secret in a browser application or publish it in GitHub.
+To enable optional server-side AI answers only after testing and consent review, set OPENAI_API_KEY and OPENAI_MODEL (a model supported by your API account), plus BUSINESS_NAME and BUSINESS_CONTEXT with verified facts. Use an explicit limited-cost provider account. Without those settings, the deterministic reply engine remains active.
+
+Do NOT put the admin secret or AI API key in a browser application or publish it in GitHub.
 
 ## API overview
 
@@ -55,7 +58,7 @@ Do NOT put the admin secret in a browser application or publish it in GitHub.
 | GET/POST | /api/leads | Admin bearer key | List or save leads |
 | GET/POST | /api/appointments | Admin bearer key | List or request appointment slots |
 | GET | /api/summary | Admin bearer key | Real database counts |
-| POST | /api/message | Admin bearer key | Deterministic intent response; never confirms bookings |
+| POST | /api/message | Admin bearer key | Optional provider answer or rule fallback; never confirms bookings |
 | POST | /twilio/voice | Valid Twilio signature | Automated greeting and gather spoken request |
 | POST | /twilio/collect | Valid Twilio signature | Capture callback lead and return scripted response |
 
@@ -63,6 +66,7 @@ Do NOT put the admin secret in a browser application or publish it in GitHub.
 
 - web/index.html, web/styles.css, web/app.js: Static interactive showcase, entirely client-side and with fictional data.
 - voicedesk/logic.py: Auditable rule-based intent responses and XML escaping helper.
+- voicedesk/ai.py: Optional constrained OpenAI Responses API call with safe fallback.
 - voicedesk/store.py: SQLite-backed lead and appointment storage, with unique date/time slots and timezone validation.
 - voicedesk/api.py: Standard-library HTTP server, protected admin API, optional signed Twilio POST routes.
 - server.py: Runnable local entry point.
